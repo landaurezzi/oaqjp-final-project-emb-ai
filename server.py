@@ -12,7 +12,7 @@ def em_detector():
     response = emotion_detection(text_to_analyze)
 
     # Check for a valid response
-    if response is None:
+    if response is None or response['dominant_emotion'] is None:
         return jsonify({"error": "Invalid text! Please try again."})
 
     # Use the response to format the output string
