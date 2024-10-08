@@ -19,21 +19,16 @@ def emotion_detection(text_to_analyze):
         response.raise_for_status()
         emotion_data = response.json()
         print("Emotion Data: ", emotion_data)
-        emotions = {
-            'anger': 0.0,
-            'disgust': 0.0,
-            'fear': 0.0,
-            'joy': 0.0,
-            'sadness': 0.0
-        }
 
-        for prediction in emotion_data.get('emotion_predictions', []):
-            emotion = prediction.get('emotion')
-            score = prediction.get('confidence')
+        # Ensure the expected structure
+        if "emotionPredictions" not in emotion_data or not emotion_data["emotionPredictions"]:
+            print("No emotion predictions found in response.")
+            return None
 
-            if emotion in emotions:
-                emotions[emotion] = score
+        # Extracting emotions from the response
+        emotions = emotion_data["emotionPredictions"][0]["emotion"]
 
+        # Add dominant emotion
         dominant_emotion = max(emotions, key=emotions.get)
         emotions['dominant_emotion'] = dominant_emotion
 
