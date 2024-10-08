@@ -1,3 +1,9 @@
+"""
+server.py: A Flask application that detects emotions from text.
+The application provides an endpoint '/emotionDetector' that takes 
+text input and returns the detected emotions and dominant emotion.
+"""
+
 from flask import Flask, request, jsonify, render_template
 from EmotionDetection.emotion_detection import emotion_detection
 
@@ -5,9 +11,10 @@ app = Flask(__name__)
 
 @app.route("/emotionDetector")
 def em_detector():
-    """Analyse client request text for emotions
-    and return a string including emotion scores and the dominant emotion."""
-    
+    """
+    Analyse client request text for emotions and return a string 
+    including emotion scores and the dominant emotion.
+    """
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detection(text_to_analyze)
 
@@ -30,7 +37,9 @@ def em_detector():
 
 @app.route("/")
 def render_index_page():
-    """Render the homepage template and return a string which is its HTML."""
+    """
+    Render the homepage template and return a string which is its HTML.
+    """
     return render_template('index.html')
 
 if __name__ == "__main__":
